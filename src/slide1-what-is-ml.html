@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 1: What is Machine Learning? - Interactive Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #4B0082 0%, #20B2AA 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideInDown 1s ease-out;
+        }
+
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #F5F5F5, #20B2AA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-card {
+            background: rgba(245, 245, 245, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(245, 245, 245, 0.3);
+            box-shadow: 0 8px 32px rgba(75, 0, 130, 0.2);
+            animation: slideInUp 1s ease-out 0.3s both;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(75, 0, 130, 0.3);
+        }
+
+        .comparison-card h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(75, 0, 130, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(32, 178, 170, 0.5);
+        }
+
+        .flow-step:hover i {
+            transform: scale(1.2) rotate(360deg);
+            color: #F5F5F5;
+            text-shadow: 0 0 15px rgba(32, 178, 170, 0.8);
+        }
+
+        .flow-step i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .arrow {
+            color: white;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .bullet-points {
+            background: rgba(245, 245, 245, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(245, 245, 245, 0.3);
+            box-shadow: 0 8px 32px rgba(75, 0, 130, 0.2);
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .bullet-points h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .bullet-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(245, 245, 245, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .bullet-item:hover {
+            background: rgba(245, 245, 245, 0.2);
+            transform: translateX(10px);
+            border-left-color: #20B2AA;
+        }
+
+        .bullet-item i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #20B2AA;
+            min-width: 30px;
+        }
+
+        .bullet-item span {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .script-section {
+            background: rgba(245, 245, 245, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(245, 245, 245, 0.3);
+            box-shadow: 0 8px 32px rgba(75, 0, 130, 0.2);
+            animation: slideInUp 1s ease-out 0.9s both;
+        }
+
+        .script-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .script-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .script-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-family: serif;
+        }
+
+        .script-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            font-family: serif;
+        }
+
+        .example-section {
+            background: rgba(245, 245, 245, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-title {
+            color: #20B2AA;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .example-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .interactive-demo {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(75, 0, 130, 0.4);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.5);
+        }
+
+        .demo-button:active {
+            transform: translateY(0);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(245, 245, 245, 0.15);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        /* Navigation Controls */
+        .navigation {
+            position: fixed;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(245, 245, 245, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(245, 245, 245, 0.3);
+            box-shadow: 0 8px 32px rgba(75, 0, 130, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .navigation.visible {
+            display: flex;
+            opacity: 1;
+            animation: slideInLeft 0.3s ease-out;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.5);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-indicators {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .indicator {
+            width: auto;
+            height: auto;
+            padding: 0.5rem 0.8rem;
+            border-radius: 15px;
+            background: rgba(245, 245, 245, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 40px;
+        }
+
+        .indicator.active {
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.5);
+        }
+
+        .indicator:hover {
+            background: rgba(245, 245, 245, 0.5);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4B0082, #20B2AA);
+            transition: width 0.3s ease;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-bar.visible {
+            opacity: 1;
+        }
+
+        .slide-counter {
+            color: white;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-align: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: rgba(245, 245, 245, 0.1);
+            padding: 0.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+        }
+
+        .sub-slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #F5F5F5, #20B2AA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .sub-slide-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Cartoon/Icon Styles */
+        .cartoon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .cartoon-box {
+            background: rgba(245, 245, 245, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(245, 245, 245, 0.3);
+            box-shadow: 0 8px 32px rgba(75, 0, 130, 0.2);
+            text-align: center;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .cartoon-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(75, 0, 130, 0.3);
+        }
+
+        .cartoon-box:hover .cartoon-icon {
+            transform: scale(1.2) rotate(360deg);
+            color: #F5F5F5;
+            text-shadow: 0 0 20px rgba(32, 178, 170, 0.8);
+        }
+
+        .cartoon-box:hover .developer-avatar {
+            transform: scale(1.2);
+            box-shadow: 0 8px 25px rgba(32, 178, 170, 0.6);
+            animation: none;
+        }
+
+        .cartoon-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: #20B2AA;
+        }
+
+        .cartoon-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cartoon-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .rule-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .rule-step {
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            color: white;
+            padding: 2rem 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 220px;
+            min-height: 160px;
+            box-shadow: 0 4px 15px rgba(75, 0, 130, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rule-step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(32, 178, 170, 0.5);
+        }
+
+        .rule-step:hover i {
+            transform: scale(1.2) rotate(360deg);
+            color: #F5F5F5;
+            text-shadow: 0 0 15px rgba(32, 178, 170, 0.8);
+        }
+
+
+        .rule-step i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .spam-not-spam {
+            position: relative;
+        }
+
+        .spam-icon {
+            color: #4CAF50;
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            animation: spamIconShow 4s ease-in-out infinite;
+        }
+
+        .not-spam-icon {
+            color: #F44336;
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            animation: notSpamIconShow 4s ease-in-out infinite;
+        }
+
+        .spam-not-spam span {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .check-rules {
+            position: relative;
+            overflow: visible;
+        }
+
+        .message-stack {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .message-icon {
+            position: absolute;
+            font-size: 1.2rem;
+            color: rgba(32, 178, 170, 0.6);
+            animation: messagePulse 3s ease-in-out infinite;
+        }
+
+        .message-1 {
+            top: -15px;
+            left: -20px;
+            animation-delay: 0s;
+        }
+
+        .message-2 {
+            top: -5px;
+            left: 0px;
+            animation-delay: 1s;
+        }
+
+        .message-3 {
+            top: 5px;
+            left: 20px;
+            animation-delay: 2s;
+        }
+
+        .lens-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            font-size: 2rem;
+            color: #20B2AA;
+            animation: lensScan 3s ease-in-out infinite;
+        }
+
+        .check-rules span {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .rule-step span {
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        .rule-arrow {
+            color: white;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .email-example {
+            background: rgba(245, 245, 245, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(245, 245, 245, 0.2);
+        }
+
+        .email-header {
+            color: #20B2AA;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .email-content {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .spam-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            justify-content: center;
+        }
+
+        .keyword-tag {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: bounce 2s infinite;
+        }
+
+        .keyword-tag:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .keyword-tag:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .developer-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4B0082, #20B2AA);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(75, 0, 130, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .developer-avatar:hover {
+            transform: scale(1.2);
+            box-shadow: 0 8px 25px rgba(32, 178, 170, 0.6);
+            animation: none;
+        }
+
+        .cartoon-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: #20B2AA;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cartoon-icon.fa-envelope-open-text::before {
+            content: '\f2b6';
+            position: relative;
+        }
+
+        .cartoon-icon.fa-envelope-open-text::after {
+            content: '✉';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #FF6B6B;
+            z-index: 1;
+            animation: letterPulse 2s ease-in-out infinite;
+        }
+
+        .cartoon-icon.fa-envelope-open-text {
+            position: relative;
+        }
+
+        .dropping-letter {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+            color: #FF6B6B;
+            animation: letterDrop 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+
+        .cartoon-icon:hover {
+            transform: scale(1.2) rotate(360deg);
+            color: #F5F5F5;
+            text-shadow: 0 0 20px rgba(32, 178, 170, 0.8);
+        }
+
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #20B2AA;
+            font-family: 'Courier New', monospace;
+            color: #20B2AA;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            margin: 0.3rem 0;
+        }
+
+        .code-keyword {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .code-string {
+            color: #feca57;
+        }
+
+        .code-comment {
+            color: #a4b0be;
+            font-style: italic;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes letterPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1); 
+                opacity: 1;
+            }
+        }
+
+        @keyframes letterDrop {
+            0% { 
+                transform: translateX(-50%) translateY(-30px) scale(1); 
+                opacity: 1;
+            }
+            20% { 
+                transform: translateX(-50%) translateY(0px) scale(1.1); 
+                opacity: 1;
+            }
+            25% { 
+                transform: translateX(-50%) translateY(8px) scale(0.8); 
+                opacity: 0.7;
+            }
+            30% { 
+                transform: translateX(-50%) translateY(15px) scale(0.6); 
+                opacity: 0.5;
+            }
+            35% { 
+                transform: translateX(-50%) translateY(22px) scale(0.4); 
+                opacity: 0.3;
+            }
+            40%, 100% { 
+                transform: translateX(-50%) translateY(30px) scale(0.2); 
+                opacity: 0;
+            }
+        }
+
+        @keyframes spamIconShow {
+            0%, 40% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50%, 100% { 
+                opacity: 0; 
+                transform: scale(0.8);
+            }
+        }
+
+        @keyframes notSpamIconShow {
+            0%, 40% { 
+                opacity: 0; 
+                transform: scale(0.8);
+            }
+            50%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+
+        @keyframes messagePulse {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.8);
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes lensScan {
+            0% { 
+                transform: translate(-50%, -50%) translate(-30px, -25px) scale(1); 
+            }
+            33% { 
+                transform: translate(-50%, -50%) translate(0px, -15px) scale(1.1); 
+            }
+            66% { 
+                transform: translate(-50%, -50%) translate(30px, 15px) scale(1.1); 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(-30px, -25px) scale(1); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+            }
+            
+            .navigation {
+                left: 0.5rem;
+                padding: 1.5rem 0.8rem;
+                min-width: 60px;
+            }
+            
+            .nav-button {
+                padding: 0.6rem;
+                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .slide-counter {
+                font-size: 0.7rem;
+            }
+            
+            .screenshots-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            .screenshot-container img {
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="presentation-container">
+        <!-- Sub-slide 1: Introduction -->
+        <div class="slide slide-1 active">
+            <div class="slide-header">
+                <h1 class="slide-title">What is Machine Learning?</h1>
+                <p class="slide-subtitle">And How is it Different from Traditional Programming?</p>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">Welcome to the Journey</h3>
+                <p class="script-text">
+                    Before diving into NLP, let's clarify what Machine Learning really means. Join us as we explore the fundamental differences between traditional programming and machine learning.
+                </p>
+                <div class="interactive-demo">
+                    <button class="demo-button" onclick="nextSlide()">
+                        <i class="fas fa-arrow-right"></i> Start Learning
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-slide 2: Traditional Programming -->
+        <div class="slide slide-2">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Traditional Programming</h1>
+                <p class="sub-slide-subtitle">Rules + Data → Output</p>
+            </div>
+
+            <div class="cartoon-container">
+                <div class="cartoon-box">
+                    <div class="developer-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="cartoon-title">Developer</div>
+                    <div class="cartoon-description">Writes explicit rules</div>
+                </div>
+
+                <div class="cartoon-box">
+                    <i class="fas fa-envelope-open-text cartoon-icon">
+                        <span class="dropping-letter">✉</span>
+                    </i>
+                    <div class="cartoon-title">Email Data</div>
+                    <div class="cartoon-description">Input to analyze</div>
+                </div>
+
+                <div class="cartoon-box">
+                    <i class="fas fa-shield-alt cartoon-icon"></i>
+                    <div class="cartoon-title">Spam Filter</div>
+                    <div class="cartoon-description">Applies rules</div>
+                </div>
+            </div>
+
+            <div class="rule-flow">
+                <div class="rule-step" onclick="animateStep(this, 0)">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </div>
+                <i class="fas fa-arrow-right rule-arrow"></i>
+                <div class="rule-step check-rules" onclick="animateStep(this, 1)">
+                    <div class="message-stack">
+                        <i class="fas fa-envelope message-icon message-1"></i>
+                        <i class="fas fa-envelope message-icon message-2"></i>
+                        <i class="fas fa-envelope message-icon message-3"></i>
+                    </div>
+                    <i class="fas fa-search lens-icon"></i>
+                    <span>Check Rules</span>
+                </div>
+                <i class="fas fa-arrow-right rule-arrow"></i>
+                <div class="rule-step spam-not-spam" onclick="animateStep(this, 2)">
+                    <i class="fas fa-check-circle spam-icon"></i>
+                    <i class="fas fa-times-circle not-spam-icon"></i>
+                    <span>Spam/Not Spam</span>
+                </div>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">How It Works</h3>
+                <p class="script-text">
+                    In traditional programming, a developer writes rules explicitly. The system follows these predefined rules to process data and produce output.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sub-slide 3: Spam Email Example -->
+        <div class="slide slide-3">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Spam Email Example</h1>
+                <p class="sub-slide-subtitle">Real-World Rule-Based Detection</p>
+            </div>
+
+            <div class="email-example">
+                <div class="email-header">
+                    <i class="fas fa-envelope"></i>
+                    Spam Email Example
+                </div>
+                <div class="email-content">
+                    <strong>Subject:</strong> "Win a FREE lottery prize! Claim your money now!"<br><br>
+                    <strong>Spam Keywords Detected:</strong>
+                    <div class="spam-keywords">
+                        <span class="keyword-tag">lottery</span>
+                        <span class="keyword-tag">free money</span>
+                        <span class="keyword-tag">win</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-line"><span class="code-keyword">if</span> (email.subject.<span class="code-keyword">contains</span>(<span class="code-string">"lottery"</span>) ||</div>
+                <div class="code-line">    email.subject.<span class="code-keyword">contains</span>(<span class="code-string">"free money"</span>)) {</div>
+                <div class="code-line">    <span class="code-comment">// Mark as spam</span></div>
+                <div class="code-line">    email.isSpam = <span class="code-keyword">true</span>;</div>
+                <div class="code-line">}</div>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">Rule-Based Detection</h3>
+                <p class="script-text">
+                    The system checks for specific keywords like 'lottery' or 'free money' in the email subject. If found, it automatically marks the email as spam.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sub-slide 4: The Traditional Way -->
+        <div class="slide slide-4">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">The Traditional Way</h1>
+                <p class="sub-slide-subtitle">Explicit Rule Writing</p>
+            </div>
+
+            <div class="cartoon-container">
+                <div class="cartoon-box">
+                    <div class="developer-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="cartoon-title">Developer Writes</div>
+                    <div class="cartoon-description">Explicit if-then rules</div>
+                </div>
+
+                <div class="cartoon-box">
+                    <i class="fas fa-list-check cartoon-icon"></i>
+                    <div class="cartoon-title">Rule List</div>
+                    <div class="cartoon-description">Predefined conditions</div>
+                </div>
+
+                <div class="cartoon-box">
+                    <i class="fas fa-cogs cartoon-icon"></i>
+                    <div class="cartoon-title">System Applies</div>
+                    <div class="cartoon-description">Rules to every email</div>
+                </div>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">The Traditional Approach</h3>
+                <p class="script-text">
+                    In traditional programming, a developer writes rules explicitly. For example, if you wanted to detect spam emails, you'd write a set of rules like: if the subject has 'lottery' or 'free money,' mark it as spam.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sub-slide 5: Machine Learning -->
+        <div class="slide slide-5">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Machine Learning</h1>
+                <p class="sub-slide-subtitle">Data + Output → Learns Rules</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="comparison-card" onclick="highlightCard(this)">
+                    <h3>How It Works</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step" onclick="animateStep(this, 0)">
+                            <i class="fas fa-database"></i>
+                            <span>Input Data</span>
+                        </div>
+                        <div class="arrow">+</div>
+                        <div class="flow-step" onclick="animateStep(this, 1)">
+                            <i class="fas fa-target"></i>
+                            <span>Expected Output</span>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="flow-step" onclick="animateStep(this, 2)">
+                            <i class="fas fa-brain"></i>
+                            <span>Algorithm learns Rules</span>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="flow-step" onclick="animateStep(this, 3)">
+                            <i class="fas fa-crystal-ball"></i>
+                            <span>Predictions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="script-section">
+                    <h3 class="script-title">The ML Way</h3>
+                    <p class="script-text">
+                        But in machine learning, instead of writing rules, you feed the system examples of emails labeled spam or not spam, and the algorithm figures out the rules on its own.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-slide 5.5: Machine Learning Spam Detection -->
+        <div class="slide slide-5-5">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Machine Learning Spam Detection</h1>
+                <p class="sub-slide-subtitle">Learning from Examples Instead of Rules</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="comparison-card">
+                    <h3><i class="fas fa-database"></i> Training Data</h3>
+                    <div class="email-example" style="padding: 1rem;">
+                        <div class="email-header" style="margin-bottom: 0.8rem;">
+                            <i class="fas fa-envelope-open-text"></i>
+                            Labeled Email Examples
+                        </div>
+                        <div class="email-content">
+                            <div style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                <div style="flex: 1; padding: 0.8rem; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border-left: 3px solid #4CAF50;">
+                                    <strong style="color: #4CAF50; font-size: 0.9rem;">✅ Not Spam</strong><br>
+                                    <span style="font-size: 0.85rem;">"Meeting tomorrow at 3 PM"</span>
+                                </div>
+                                <div style="flex: 1; padding: 0.8rem; background: rgba(244, 67, 54, 0.1); border-radius: 8px; border-left: 3px solid #F44336;">
+                                    <strong style="color: #F44336; font-size: 0.9rem;">❌ Spam</strong><br>
+                                    <span style="font-size: 0.85rem;">"Win FREE money now!"</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #20B2AA; font-weight: 600; font-size: 0.9rem;">
+                                <i class="fas fa-ellipsis-h"></i> Thousands of examples <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <h3><i class="fas fa-brain"></i> ML Algorithm Learning</h3>
+                    <div class="cartoon-container" style="gap: 1rem; margin: 1rem 0;">
+                        <div class="cartoon-box" style="padding: 1.2rem; min-width: 150px;">
+                            <i class="fas fa-chart-line cartoon-icon" style="font-size: 2.5rem;"></i>
+                            <div class="cartoon-title" style="font-size: 1rem;">Pattern Recognition</div>
+                            <div class="cartoon-description" style="font-size: 0.8rem;">Finds hidden patterns</div>
+                        </div>
+                        <div class="cartoon-box" style="padding: 1.2rem; min-width: 150px;">
+                            <i class="fas fa-cogs cartoon-icon" style="font-size: 2.5rem;"></i>
+                            <div class="cartoon-title" style="font-size: 1rem;">Model Training</div>
+                            <div class="cartoon-description" style="font-size: 0.8rem;">Learns from data</div>
+                        </div>
+                        <div class="cartoon-box" style="padding: 1.2rem; min-width: 150px;">
+                            <i class="fas fa-magic cartoon-icon" style="font-size: 2.5rem;"></i>
+                            <div class="cartoon-title" style="font-size: 1rem;">Prediction</div>
+                            <div class="cartoon-description" style="font-size: 0.8rem;">Makes smart decisions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-flow" style="margin: 1.5rem 0;">
+                <div class="rule-step" onclick="animateStep(this, 0)" style="padding: 1.2rem 1.8rem; min-height: 120px;">
+                    <i class="fas fa-database" style="font-size: 1.8rem;"></i>
+                    <span style="font-size: 1rem;">Training Emails</span>
+                </div>
+                <i class="fas fa-arrow-right rule-arrow"></i>
+                <div class="rule-step" onclick="animateStep(this, 1)" style="padding: 1.2rem 1.8rem; min-height: 120px;">
+                    <i class="fas fa-brain" style="font-size: 1.8rem;"></i>
+                    <span style="font-size: 1rem;">ML Algorithm</span>
+                </div>
+                <i class="fas fa-arrow-right rule-arrow"></i>
+                <div class="rule-step" onclick="animateStep(this, 2)" style="padding: 1.2rem 1.8rem; min-height: 120px;">
+                    <i class="fas fa-crystal-ball" style="font-size: 1.8rem;"></i>
+                    <span style="font-size: 1rem;">Learned Model</span>
+                </div>
+                <i class="fas fa-arrow-right rule-arrow"></i>
+                <div class="rule-step spam-not-spam" onclick="animateStep(this, 3)" style="padding: 1.2rem 1.8rem; min-height: 120px;">
+                    <i class="fas fa-check-circle spam-icon" style="font-size: 1.8rem;"></i>
+                    <i class="fas fa-times-circle not-spam-icon" style="font-size: 1.8rem;"></i>
+                    <span style="font-size: 1rem;">Smart Predictions</span>
+                </div>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">The ML Way</h3>
+                <p class="script-text">
+                    Instead of writing rules, we feed the algorithm thousands of emails already labeled as spam or not spam. The algorithm learns patterns we might not even notice and creates its own rules!
+                </p>
+            </div>
+        </div>
+
+        <!-- Sub-slide 6: Key Differences -->
+        <div class="slide slide-6">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Key Differences</h1>
+                <p class="sub-slide-subtitle">What Makes Them Different?</p>
+            </div>
+
+            <div class="bullet-points">
+                <h3>Traditional vs Machine Learning</h3>
+                <div class="bullet-item" onclick="highlightFeature(this)">
+                    <i class="fas fa-cogs"></i>
+                    <span>Learns patterns from data instead of explicit coding</span>
+                </div>
+                <div class="bullet-item" onclick="highlightFeature(this)">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Improves with more data and experience</span>
+                </div>
+                <div class="bullet-item" onclick="highlightFeature(this)">
+                    <i class="fas fa-robot"></i>
+                    <span>Discovers rules automatically</span>
+                </div>
+                <div class="bullet-item" onclick="highlightFeature(this)">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Adapts to new patterns without reprogramming</span>
+                </div>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">The Simple Truth</h3>
+                <p class="script-text">
+                    So the difference is simple: Traditional programming = humans define rules. Machine learning = the machine discovers rules from data.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sub-slide 7: Real-World Example -->
+        <div class="slide slide-7">
+            <div class="content-grid" style="grid-template-columns: 70% 30%; gap: 2rem; margin-top: 0; align-items: start; justify-content: center; max-width: 90vw; margin-left: auto; margin-right: auto;">
+                <!-- Left side: Image Display Area -->
+                <div class="comparison-card" style="padding: 1.5rem;">
+                    <h3><i class="fas fa-code"></i> Traditional Programming Approach</h3>
+                    <div class="script-section">
+                        <!-- Dynamic Image Display Area -->
+                        <div id="animalImageDisplay" style="text-align: center; margin: 0.5rem 0; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+                            <div style="color: rgba(255, 255, 255, 0.5); font-style: italic;">
+                                Click a rule on the right to see the example
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right side: Explicit Rules -->
+                <div class="comparison-card" style="padding: 1.5rem;">
+                    <h3><i class="fas fa-list-check"></i> Explicit Rules</h3>
+                    <div style="color: white; line-height: 1.8;">
+                        <div style="margin-bottom: 0.8rem; padding: 0.5rem; background: rgba(255, 107, 107, 0.1); border-radius: 8px; border-left: 3px solid #FF6B6B; cursor: pointer; transition: all 0.3s ease;" onclick="showAnimalImage('cat')" onmouseover="this.style.background='rgba(255, 107, 107, 0.2)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.1)'">
+                            <i class="fas fa-cat" style="color: #FF6B6B; margin-right: 0.5rem;"></i>
+                            <strong>If it has whiskers and meows, it's a cat.</strong>
+                        </div>
+                        <div style="padding: 0.5rem; background: rgba(78, 205, 196, 0.1); border-radius: 8px; border-left: 3px solid #4ECDC4; cursor: pointer; transition: all 0.3s ease;" onclick="showAnimalImage('dog')" onmouseover="this.style.background='rgba(78, 205, 196, 0.2)'" onmouseout="this.style.background='rgba(78, 205, 196, 0.1)'">
+                            <i class="fas fa-dog" style="color: #4ECDC4; margin-right: 0.5rem;"></i>
+                            <strong>If it has a wagging tail and barks, it's a dog.</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Sub-slide 8: Book Pages Animation -->
+        <div class="slide slide-8">
+
+            <div class="content-grid" style="grid-template-columns: 1fr; margin-top: 2rem; justify-content: center; max-width: 80vw; margin-left: auto; margin-right: auto;">
+                <div class="comparison-card" style="padding: 2rem; text-align: center;">
+                    <h3><i class="fas fa-book-open"></i> Machine Learning Approach</h3>
+                    <p style="color: #B0B0B0; margin-bottom: 2rem; font-size: 1.1rem;">
+                        Instead of writing rules, we show the system thousands of examples - just like teaching a child by showing them picture books!
+                    </p>
+                    
+                    <!-- Filmstrip Animation Container -->
+                    <div id="filmstripContainer" style="position: relative; width: 100%; max-width: 800px; height: 300px; margin: 0 auto; background: #1a1a1a; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+                        <!-- Filmstrip Holes -->
+                        <div style="position: absolute; top: 10px; left: 0; right: 0; height: 20px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, #333 8px, #333 12px); z-index: 2;"></div>
+                        <div style="position: absolute; bottom: 10px; left: 0; right: 0; height: 20px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, #333 8px, #333 12px); z-index: 2;"></div>
+                        
+                        <!-- Filmstrip Frames -->
+                        <div id="filmstripFrames" style="position: absolute; top: 40px; left: 0; height: 220px; display: flex; transition: transform 0.5s ease-in-out; transform: translateX(0px);">
+                            <!-- Frames will be generated dynamically by JavaScript -->
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <!-- Learning Progress Indicator -->
+                    <div style="margin-top: 2rem; background: rgba(0, 0, 0, 0.3); border-radius: 15px; padding: 1.5rem;">
+                        <h4 style="color: #20B2AA; margin: 0 0 1rem 0; text-align: center; font-size: 1.1rem;">
+                            <i class="fas fa-brain"></i> Learning Progress
+                        </h4>
+                        
+                        <!-- Progress Bar -->
+                        <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; height: 20px; margin-bottom: 1rem; overflow: hidden; position: relative;">
+                            <div id="learningProgressBar" style="background: linear-gradient(90deg, #4ECDC4 0%, #44A08D 50%, #20B2AA 100%); height: 100%; width: 0%; transition: width 0.3s ease; border-radius: 10px; position: relative;">
+                                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%); animation: shimmer 2s infinite;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Learning Stats -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
+                            <div>
+                                <div id="examplesSeen" style="color: #4ECDC4; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.3rem;">0</div>
+                                <div style="color: #B0B0B0; font-size: 0.9rem;">Examples Seen</div>
+                            </div>
+                            <div>
+                                <div id="learningAccuracy" style="color: #20B2AA; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.3rem;">0%</div>
+                                <div style="color: #B0B0B0; font-size: 0.9rem;">Accuracy</div>
+                            </div>
+                            <div>
+                                <div id="learningStage" style="color: #FF6B6B; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.3rem;">Learning</div>
+                                <div style="color: #B0B0B0; font-size: 0.9rem;">Stage</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Learning Status Text -->
+                        <div id="learningStatus" style="color: #B0B0B0; text-align: center; margin-top: 1rem; font-style: italic; font-size: 0.95rem;">
+                            Ready to learn from examples...
+                        </div>
+                    </div>
+                    
+                    <p style="color: #B0B0B0; margin-top: 1.5rem; font-style: italic;">
+                        Watch the system learn patterns as it processes more examples!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-slide 9: Interactive Demo -->
+        <div class="slide slide-9">
+            <div class="slide-header">
+                <h1 class="sub-slide-title">Interactive Demo</h1>
+                <p class="sub-slide-subtitle">See the Difference in Action</p>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">Let's See It Work</h3>
+                <p class="script-text">
+                    Now let's run through both approaches step by step to see how they differ in practice.
+                </p>
+                
+                <div class="interactive-demo">
+                    <button class="demo-button" onclick="runDemo()">
+                        <i class="fas fa-play"></i> Run Interactive Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="previousSlide()" disabled title="Previous Slide">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="slide-indicators" id="slideIndicators">
+            <!-- Indicators will be generated by JavaScript -->
+        </div>
+        
+        <button class="nav-button" id="nextBtn" onclick="nextSlide()" title="Next Slide">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+        
+        <div class="slide-counter">
+            <span id="currentSlide"></span> / <span id="totalSlides">9</span>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Initialize presentation
+        function initPresentation() {
+            updateSlideDisplay();
+            createSlideIndicators();
+            updateProgressBar();
+            hideNavigationControls();
+            startFilmstripAnimation();
+        }
+
+        // Update slide display
+        function updateSlideDisplay() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides - 1;
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = `${currentSlideIndex + 1}`;
+            document.getElementById('totalSlides').textContent = `${totalSlides}`;
+        }
+
+        // Create slide indicators
+        function createSlideIndicators() {
+            const indicatorsContainer = document.getElementById('slideIndicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.textContent = `s1-${i + 1}`;
+                indicator.title = `Slide ${i + 1}`; // Add tooltip with slide number
+                if (i === currentSlideIndex) {
+                    indicator.classList.add('active');
+                }
+                indicator.onclick = () => goToSlide(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Go to specific slide
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlideIndex = slideIndex;
+                updateSlideDisplay();
+                updateSlideIndicators();
+                updateProgressBar();
+            }
+        }
+
+        // Update slide indicators
+        function updateSlideIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlideIndex);
+            });
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Next slide
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateSlideDisplay();
+                updateSlideIndicators();
+                updateProgressBar();
+            }
+        }
+
+        // Previous slide
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlideDisplay();
+                updateSlideIndicators();
+                updateProgressBar();
+            }
+        }
+
+        // Navigation control visibility
+        let navigationVisible = false;
+
+        function showNavigationControls() {
+            const navigation = document.querySelector('.navigation');
+            const progressBar = document.getElementById('progressBar');
+            navigation.classList.add('visible');
+            progressBar.classList.add('visible');
+            navigationVisible = true;
+        }
+
+        function hideNavigationControls() {
+            const navigation = document.querySelector('.navigation');
+            const progressBar = document.getElementById('progressBar');
+            navigation.classList.remove('visible');
+            progressBar.classList.remove('visible');
+            navigationVisible = false;
+        }
+
+        function toggleNavigationControls() {
+            if (navigationVisible) {
+                hideNavigationControls();
+            } else {
+                showNavigationControls();
+            }
+        }
+
+        // Interactive functions
+        function highlightCard(element) {
+            // Remove previous highlights
+            document.querySelectorAll('.comparison-card').forEach(card => {
+                card.style.border = '1px solid rgba(245, 245, 245, 0.3)';
+                card.style.transform = '';
+            });
+            
+            // Highlight current card
+            element.style.border = '2px solid #20B2AA';
+            element.style.transform = 'translateY(-5px)';
+            
+            // Add pulse animation
+            element.style.animation = 'pulse 0.5s ease-in-out';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 500);
+        }
+
+        function highlightFeature(element) {
+            // Remove previous highlights
+            document.querySelectorAll('.bullet-item').forEach(item => {
+                item.style.borderLeftColor = 'transparent';
+                item.style.background = 'rgba(245, 245, 245, 0.08)';
+            });
+            
+            // Highlight current item
+            element.style.borderLeftColor = '#20B2AA';
+            element.style.background = 'rgba(245, 245, 245, 0.2)';
+            
+            // Add pulse animation
+            element.style.animation = 'pulse 0.5s ease-in-out';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 500);
+        }
+
+        function animateStep(element, stepIndex) {
+            // Reset all steps
+            document.querySelectorAll('.flow-step').forEach(step => {
+                step.style.transform = '';
+                step.style.boxShadow = '0 4px 15px rgba(75, 0, 130, 0.4)';
+            });
+            
+            // Animate current step
+            element.style.transform = 'scale(1.1)';
+            element.style.boxShadow = '0 8px 25px rgba(32, 178, 170, 0.5)';
+            
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                top: 50%;
+                left: 50%;
+                width: 100px;
+                height: 100px;
+                margin-left: -50px;
+                margin-top: -50px;
+            `;
+            
+            element.style.position = 'relative';
+            element.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        function runDemo() {
+            const button = document.querySelector('.demo-button');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Demo...';
+            button.disabled = true;
+            
+            // Simulate demo process
+            setTimeout(() => {
+                // Animate through all steps
+                const steps = document.querySelectorAll('.flow-step');
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        animateStep(step, index);
+                    }, index * 800);
+                });
+                
+                // Reset button
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, steps.length * 800 + 1000);
+            }, 1000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Check for 'N' key to toggle navigation
+            if (e.key === 'n' || e.key === 'N') {
+                e.preventDefault();
+                toggleNavigationControls();
+                return;
+            }
+
+            // Only allow navigation if controls are visible or using basic keys
+            if (!navigationVisible && !['ArrowRight', 'ArrowLeft', ' ', 'Home', 'End'].includes(e.key)) {
+                return;
+            }
+
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    previousSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    goToSlide(totalSlides - 1);
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    hideNavigationControls();
+                    break;
+            }
+        });
+
+        // Add CSS for ripple animation and shimmer effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Function to show animal image when rule is clicked
+        function showAnimalImage(animal) {
+            const imageDisplay = document.getElementById('animalImageDisplay');
+            
+            // Set the image based on animal type
+            const imageSrc = animal === 'cat' ? 'images/cat.png' : 'images/dog.png';
+            const animalName = animal === 'cat' ? 'Cat' : 'Dog';
+            
+            imageDisplay.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="color: #20B2AA; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.8rem;">
+                        <i class="fas fa-${animal === 'cat' ? 'cat' : 'dog'}"></i> ${animalName} Example
+                    </div>
+                    <img src="${imageSrc}" alt="${animalName}" style="width: 100%; max-height: 50vh; border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+                </div>
+            `;
+        }
+
+        // Filmstrip Animation Variables
+        let filmstripPosition = 0;
+        let filmstripInterval = null;
+        let currentFrameIndex = 0;
+        let examplesProcessed = 0;
+        let learningProgress = 0;
+        const totalFrames = 50;
+        const baseCatImages = ['cat1.png', 'cat2.png', 'cat3.png', 'cat4.png'];
+        const gradients = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+        ];
+        
+        // Learning stages and messages
+        const learningStages = [
+            { name: 'Learning', accuracy: 0, message: 'Recognizing basic patterns...' },
+            { name: 'Improving', accuracy: 25, message: 'Building feature recognition...' },
+            { name: 'Optimizing', accuracy: 50, message: 'Fine-tuning algorithms...' },
+            { name: 'Mastered', accuracy: 75, message: 'Pattern recognition complete!' }
+        ];
+
+        // Generate filmstrip frames dynamically
+        function generateFilmstripFrames() {
+            const filmstripFrames = document.getElementById('filmstripFrames');
+            if (!filmstripFrames) return;
+            
+            filmstripFrames.innerHTML = '';
+            
+            // Generate 50 frames + 10 extra for seamless loop
+            for (let i = 0; i < totalFrames + 10; i++) {
+                const frameNumber = (i % totalFrames) + 1;
+                const catImageIndex = (i % baseCatImages.length);
+                const gradientIndex = (i % gradients.length);
+                
+                const frame = document.createElement('div');
+                frame.className = 'film-frame';
+                frame.style.cssText = `
+                    width: 200px; 
+                    height: 220px; 
+                    flex-shrink: 0; 
+                    margin-right: 10px; 
+                    background: ${gradients[gradientIndex]}; 
+                    border-radius: 10px; 
+                    display: flex; 
+                    flex-direction: column; 
+                    align-items: center; 
+                    justify-content: center; 
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                `;
+                
+                frame.innerHTML = `
+                    <img src="images/${baseCatImages[catImageIndex]}" alt="Cat Example ${frameNumber}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-size: 0.9rem; color: white; text-align: center;">Cat ${frameNumber}</h4>
+                `;
+                
+                filmstripFrames.appendChild(frame);
+            }
+        }
+
+        // Update learning progress
+        function updateLearningProgress() {
+            examplesProcessed++;
+            
+            // Calculate current cat number being displayed
+            const currentCatNumber = (Math.floor(Math.abs(filmstripPosition) / 210) % totalFrames) + 1;
+            
+            // Update learning progress based on current cat number
+            learningProgress = Math.min((currentCatNumber / totalFrames) * 100, 100);
+            
+            // Update progress bar
+            const progressBar = document.getElementById('learningProgressBar');
+            if (progressBar) {
+                progressBar.style.width = `${learningProgress}%`;
+            }
+            
+            // Update examples seen to match current cat number
+            const examplesSeen = document.getElementById('examplesSeen');
+            if (examplesSeen) {
+                examplesSeen.textContent = currentCatNumber;
+            }
+            
+            // Update accuracy and stage
+            const currentStage = learningStages.find(stage => learningProgress >= stage.accuracy) || learningStages[learningStages.length - 1];
+            const nextStage = learningStages[learningStages.findIndex(stage => stage.accuracy > learningProgress)];
+            
+            const learningAccuracy = document.getElementById('learningAccuracy');
+            const learningStage = document.getElementById('learningStage');
+            const learningStatus = document.getElementById('learningStatus');
+            
+            if (learningAccuracy) {
+                const accuracy = Math.min((currentCatNumber / totalFrames) * 95, 95); // Cap at 95%
+                learningAccuracy.textContent = `${Math.round(accuracy)}%`;
+            }
+            
+            if (learningStage) {
+                learningStage.textContent = currentStage.name;
+            }
+            
+            if (learningStatus) {
+                if (nextStage) {
+                    const progressToNext = ((currentCatNumber - (currentStage.accuracy * totalFrames / 100)) / ((nextStage.accuracy * totalFrames / 100) - (currentStage.accuracy * totalFrames / 100))) * 100;
+                    learningStatus.textContent = `${currentStage.message} (${Math.round(Math.max(0, Math.min(100, progressToNext)))}% to ${nextStage.name})`;
+                } else {
+                    learningStatus.textContent = currentStage.message;
+                }
+            }
+        }
+
+        // Filmstrip Animation Functions
+        function startFilmstripAnimation() {
+            const filmstripFrames = document.getElementById('filmstripFrames');
+            if (!filmstripFrames) return;
+            
+            // Generate frames first
+            generateFilmstripFrames();
+            
+            // Calculate total width of one complete set of frames
+            const frameWidth = 210; // 200px width + 10px margin
+            const totalWidth = frameWidth * totalFrames;
+            
+            filmstripInterval = setInterval(() => {
+                filmstripPosition -= 1; // Move 1px to the left
+                
+                // Update learning progress every 20 frames (roughly every second)
+                if (Math.abs(filmstripPosition) % 20 === 0) {
+                    updateLearningProgress();
+                }
+                
+                // Reset position when we've moved one complete cycle
+                if (Math.abs(filmstripPosition) >= totalWidth) {
+                    filmstripPosition = 0;
+                    examplesProcessed = 0; // Reset for continuous learning
+                }
+                
+                filmstripFrames.style.transform = `translateX(${filmstripPosition}px)`;
+            }, 20); // 20ms = 50fps for smooth animation
+        }
+
+        function stopFilmstripAnimation() {
+            if (filmstripInterval) {
+                clearInterval(filmstripInterval);
+                filmstripInterval = null;
+            }
+        }
+
+        // Initialize presentation when page loads
+        document.addEventListener('DOMContentLoaded', initPresentation);
+    </script>
+</body>
+</html>
+
+

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CharacteristicsSlide, ArchitectureSlide, UseCasesSlide, ConfigurationSlide as ConfigSlide, ComparisonSlide as CompSlide } from "./SlideComponents";
@@ -96,12 +95,15 @@ function TokenStream({ speed, density = 8, label = "Data Flow" }) {
 }
 
 // ---------- Main Component ----------
-export default function SLMExplainer() {
+interface SLMExplainerProps {
+  currentSlide: number;
+}
+
+export default function SLMExplainer({ currentSlide }: SLMExplainerProps) {
   const [paramsM, setParamsM] = useState(50); // million params
   const [contextLen, setContextLen] = useState(1024);
   const [device, setDevice] = useState("Browser (Desktop WebGPU)");
   const [quantBits, setQuantBits] = useState(4);
-  const [currentSlide, setCurrentSlide] = useState(0); // presentation slides
   const [isPresenting, setIsPresenting] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
 
@@ -173,29 +175,11 @@ export default function SLMExplainer() {
     }
   ];
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  // Navigation is now handled at the app level
   
-  // Keyboard controls
-  React.useEffect(() => {
-    const handleKeyPress = (e) => {
-      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
-      if (e.key === 'p' || e.key === 'P') setIsPresenting(!isPresenting);
-      if (e.key === 'a' || e.key === 'A') setAutoPlay(!autoPlay);
-      if (e.key === 'Escape') setIsPresenting(false);
-    };
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isPresenting, autoPlay]);
+  // Keyboard controls are now handled at the app level
 
-  // Auto-play functionality
-  React.useEffect(() => {
-    if (autoPlay && isPresenting) {
-      const timer = setTimeout(nextSlide, 8000); // 8 seconds per slide
-      return () => clearTimeout(timer);
-    }
-  }, [autoPlay, isPresenting, currentSlide]);
+  // Auto-play functionality is now handled at the app level
 
   if (isPresenting) {
     return <PresentationMode 
@@ -212,8 +196,6 @@ export default function SLMExplainer() {
       metrics={{ weightMB, kvTotalMB, memMB, baseTPS, ttfbMs, downloadMB }}
       badges={badges}
       llmCompare={llmCompare}
-      nextSlide={nextSlide}
-      prevSlide={prevSlide}
       autoPlay={autoPlay}
       setAutoPlay={setAutoPlay}
       setIsPresenting={setIsPresenting}
@@ -370,8 +352,6 @@ function PresentationMode({
   metrics, 
   badges, 
   llmCompare, 
-  nextSlide, 
-  prevSlide, 
   autoPlay, 
   setAutoPlay, 
   setIsPresenting 
@@ -475,7 +455,6 @@ function PresentationMode({
         {/* Navigation */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-6">
           <motion.button
-            onClick={prevSlide}
             className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xl"
             whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
             whileTap={{ scale: 0.9 }}
@@ -494,7 +473,6 @@ function PresentationMode({
           </div>
           
           <motion.button
-            onClick={nextSlide}
             className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xl"
             whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
             whileTap={{ scale: 0.9 }}
